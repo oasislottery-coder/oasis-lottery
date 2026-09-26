@@ -17,7 +17,7 @@ button,.btn{background:var(--gold);color:#111;border:0;padding:11px 15px;border-
 </main>
 <div id="bookingModal" class="modal"><form id="bookingForm" class="box"><h2>Prenota il numero <span id="selectedNumber"></span></h2><label>Nome</label><input name="nome" required maxlength="40"><label>Cognome</label><input name="cognome" required maxlength="50"><label>Telefono</label><input name="telefono" required maxlength="30"><label>Email</label><input name="email" required type="email" maxlength="100"><label><input type="checkbox" name="privacy" required style="width:auto"> Accetto l'informativa privacy da predisporre prima della pubblicazione.</label><div class="actions"><button type="submit">Prenota per 60 minuti</button><button type="button" class="secondary" id="closeModal">Annulla</button></div></form></div>
 <script>
-const KEY='oasisBookingsV1', ADMIN_PIN='2027', HOLD=60*60*1000; let chosen=null, admin=false;
+const KEY='oasisBookingsV1', ADMIN_PIN='8390', HOLD=60*60*1000; let chosen=null, admin=false;
 const load=()=>JSON.parse(localStorage.getItem(KEY)||'{}'); const save=d=>localStorage.setItem(KEY,JSON.stringify(d));
 function cleanup(){const d=load(),now=Date.now();let changed=false;Object.keys(d).forEach(k=>{if(d[k].status==='Prenotato'&&d[k].expires<=now){delete d[k];changed=true}});if(changed)save(d)}
 function render(){cleanup();const d=load(),g=document.getElementById('grid');g.innerHTML='';for(let n=1;n<=90;n++){const b=document.createElement('button'),r=d[n];b.className='num';b.innerHTML='<span>'+n+'</span>';if(r){b.classList.add(r.status==='Confermato'?'confirmed':'hold');b.innerHTML+='<small>'+escapeHtml(r.nome)+'</small>';b.disabled=true}else b.onclick=()=>openBooking(n);g.appendChild(b)}if(admin)renderAdmin()}
